@@ -1,0 +1,28 @@
+{
+  "tag": "body",
+  "attributes": {},
+  "children": [
+    {
+      "tag": "div",
+      "attributes": {},
+      "children": [
+        {
+          "tag": "p",
+          "attributes": {},
+          "children": [
+            "ready"
+          ]
+        },
+        {
+          "tag": "p",
+          "attributes": {
+            "style": "color: red;"
+          },
+          "children": [
+            "go"
+          ]
+        }
+      ]
+    }
+  ]
+}
