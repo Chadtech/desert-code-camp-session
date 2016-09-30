@@ -1,10 +1,3 @@
-render(
-  div(
-    {style: "position: absolute; left: 0px; top: 0px; color: #ff0000;"},
-    div({})
-  )
-);
-
 const node = tag => {
   return function(attributes) {
 
@@ -32,9 +25,25 @@ const node = tag => {
 
 const text = t => document.createTextNode(t);
 
-const div = node("p");
+const div = node("div");
 
 const render = root => {
   document.body.appendChild(root);
 };
 
+render(
+  div({},
+    div(
+      {style: "position: absolute; left: 100px; top: 100px; background-color: #ffff00; width: 100px; height: 100px"}
+    ),
+    div(
+      {style: "position: absolute; left: 300px; top: 100px; background-color: #00ff00; width: 100px; height: 100px"}
+    ),
+    div(
+      {style: "position: absolute; left: 300px; top: 300px; background-color: #00ffff; width: 100px; height: 100px"}
+    ),
+    div(
+      {style: "position: absolute; left: 100px; top: 300px; background-color: #0000ff; width: 100px; height: 100px"}
+    ),
+  )
+);
