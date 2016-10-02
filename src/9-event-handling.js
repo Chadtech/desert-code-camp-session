@@ -1,36 +1,12 @@
 const Respond = {
   render: function(component) {
-    this.app = component
     document.body.appendChild(
       component.render()
     );
   },
 
-  app: undefined,
-
-  rerender: function(component) {
-    thePage = document.body.parentElement;
-    thePage.removeChild(document.body);
-    thePage.appendChild(
-      document.createElement("body")
-    );
-
-    this.render(this.app);
-  },
-
   createClass: function(component) {
     keys = Object.keys(component)
-
-    component.setState = function(change) {
-      keys = Object.keys(change);
-
-      this.state = Object.assign(
-        this.state, 
-        change
-      )
-
-      Respond.rerender(this);
-    }
 
     return (
       keys.reduce((c, key) => {
@@ -87,31 +63,40 @@ const div   = node("div");
 const input = node("input");
 const p     = node("p");
 
-const Counter = {
-  state: { count: 0 },
-
-  increment: function() {
-    this.setState({
-      count: this.state.count + 1
-    });
+const starTrekNameApp = {
+  state: {
+    theme: "star trek",
+    inputClicked: false
   },
 
-  render: function() {
+  sayStarTrekName: function() {
+    console.log(this.state);
+    this.state.inputClicked = true;
+    console.log(this.state);
+  },
+
+  render: function(){
+
+    const titleMsg = 
+      "Whats your " 
+      + this.state.theme 
+      + " name?  Enter your SSN to find out!";
+
+
     return (
       div({},
-        p({}, text("counter!!")),
-        p({}, text("" + this.state.count)),
+        p({}, text(titleMsg)),
+        input({placeholder: "enter SSN here"}),
         input({
           type: "submit",
-          value : '+',
-          onClick: this.increment
+          onClick: this.sayStarTrekName
         })    
       )
     );
   }
 };
 
-App = Respond.createClass(Counter);
+App = Respond.createClass(starTrekNameApp);
 
 Respond.render(App);
 

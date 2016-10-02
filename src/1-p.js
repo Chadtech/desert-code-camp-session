@@ -1,4 +1,4 @@
-const p = text => {
+function p(text) {
   output = document.createElement("p");
 
   output.appendChild(

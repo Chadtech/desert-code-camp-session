@@ -1,36 +1,12 @@
 const Respond = {
   render: function(component) {
-    this.app = component
     document.body.appendChild(
       component.render()
     );
   },
 
-  app: undefined,
-
-  rerender: function(component) {
-    thePage = document.body.parentElement;
-    thePage.removeChild(document.body);
-    thePage.appendChild(
-      document.createElement("body")
-    );
-
-    this.render(this.app);
-  },
-
   createClass: function(component) {
     keys = Object.keys(component)
-
-    component.setState = function(change) {
-      keys = Object.keys(change);
-
-      this.state = Object.assign(
-        this.state, 
-        change
-      )
-
-      Respond.rerender(this);
-    }
 
     return (
       keys.reduce((c, key) => {
@@ -91,12 +67,11 @@ const Counter = {
   state: { count: 0 },
 
   increment: function() {
-    this.setState({
-      count: this.state.count + 1
-    });
+    this.state.count = this.state.count + 1;
+    console.log(this.state.count);
   },
 
-  render: function() {
+  render: function(){
     return (
       div({},
         p({}, text("counter!!")),

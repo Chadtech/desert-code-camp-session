@@ -1,5 +1,5 @@
-const div = () => {
-  return document.createElement("div") 
-}
+function div() {
+  return document.createElement("div");
+};
 
 document.body.appendChild( div() );
