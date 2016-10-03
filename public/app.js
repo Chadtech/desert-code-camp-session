@@ -1,7 +1,7 @@
 const Respond = {
   render: function (component) {
     this.app = component;
-    document.body.appendChild(component().render());
+    document.body.appendChild(component.render());
   },
 
   app: undefined,
@@ -11,22 +11,21 @@ const Respond = {
     thePage.removeChild(document.body);
     thePage.appendChild(document.createElement("body"));
 
-    this.render(this.app());
+    this.render(this.app);
   },
 
   createClass: function (component) {
     return function () {
-      keys = Object.keys(component);
 
+      component.isRespondClass = true;
       component.setState = function (change) {
-        keys = Object.keys(change);
 
         this.state = Object.assign(this.state, change);
 
         Respond.rerender(this);
       };
 
-      console.log("component", component);
+      const keys = Object.keys(component);
 
       return keys.reduce((c, key) => {
         var value = component[key];
@@ -38,7 +37,7 @@ const Respond = {
         c[key] = value;
 
         return c;
-      }, { isRespondClass: true });
+      }, {});
     };
   }
 };
@@ -53,6 +52,7 @@ const node = tag => {
     for (var i = 1; i < arguments.length; i++) {
       children.push(arguments[i]);
     }
+
     // Give the element its children
     element = children.reduce((el, child) => {
       if (child.isRespondClass) {
@@ -84,7 +84,6 @@ const input = node("input");
 const p = node("p");
 
 const Title = Respond.createClass({
-
   render: function () {
     return p({}, text("counter!!"));
   }
@@ -94,7 +93,6 @@ const Counter = {
   state: { count: 0 },
 
   increment: function () {
-    console.log(this);
     this.setState({
       count: this.state.count + 1
     });
@@ -111,4 +109,4 @@ const Counter = {
 
 App = Respond.createClass(Counter);
 
-Respond.render(App);
+Respond.render(App());

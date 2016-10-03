@@ -20,10 +20,9 @@ const Respond = {
 
   createClass: function(component) {
     return ( function() {
-      keys = Object.keys(component)
-
+      
+      component.isRespondClass = true;
       component.setState = function(change) {
-        keys = Object.keys(change);
 
         this.state = Object.assign(
           this.state, 
@@ -31,7 +30,9 @@ const Respond = {
         )
 
         Respond.rerender(this);
-      }
+      };
+
+      const keys = Object.keys(component);
 
       return (
         keys.reduce((c, key) => {
@@ -64,10 +65,10 @@ const node = tag => {
 
     // Give the element its children
     element = children.reduce((el, child) => {
-      if (el instanceof HTMLElement) {
-        el.appendChild(child);
-      } else {
+      if (child.isRespondClass) {
         el.appendChild(child.render());
+      } else {
+        el.appendChild(child);
       }
       return el;
     }, element);
@@ -98,7 +99,7 @@ const p     = node("p");
 const Title = Respond.createClass({
   render: function() {
     return (
-      p({}, text("counter!!")),
+      p({}, text("counter!!"))
     );
   }
 });

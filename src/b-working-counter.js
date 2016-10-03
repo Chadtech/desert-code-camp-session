@@ -19,10 +19,8 @@ const Respond = {
   },
 
   createClass: function(component) {
-    keys = Object.keys(component)
 
     component.setState = function(change) {
-      keys = Object.keys(change);
 
       this.state = Object.assign(
         this.state, 
@@ -30,7 +28,9 @@ const Respond = {
       )
 
       Respond.rerender(this);
-    }
+    };
+
+    const keys = Object.keys(component);
 
     return (
       keys.reduce((c, key) => {
