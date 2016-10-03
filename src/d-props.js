@@ -19,32 +19,37 @@ const Respond = {
   },
 
   createClass: function(component) {
+    return (function(props) {
+      
+      component.isRespondClass = true;
+      component.setState = function(change) {
 
-    component.setState = function(change) {
+        this.state = Object.assign(
+          this.state, 
+          change
+        )
 
-      this.state = Object.assign(
-        this.state, 
-        change
-      )
+        Respond.rerender(this);
+      };
 
-      Respond.rerender(this);
-    };
+      component.props = props;
 
-    const keys = Object.keys(component);
+      const keys = Object.keys(component);
 
-    return (
-      keys.reduce((c, key) => {
-        var value = component[key];
+      return (
+        keys.reduce((c, key) => {
+          var value = component[key];
 
-        if (typeof value === "function") {
-          value = value.bind(c);
-        }
+          if (typeof value === "function") {
+            value = value.bind(c);
+          }
 
-        c[key] = value;
+          c[key] = value;
 
-        return c;
-      }, {})
-    );
+          return c;
+        }, {})
+      );
+    });
   },
 }
 
@@ -62,7 +67,11 @@ const node = tag => {
 
     // Give the element its children
     element = children.reduce((el, child) => {
-      el.appendChild(child);
+      if (child.isRespondClass) {
+        el.appendChild(child.render());
+      } else {
+        el.appendChild(child);
+      }
       return el;
     }, element);
 
@@ -89,7 +98,22 @@ const div   = node("div");
 const input = node("input");
 const p     = node("p");
 
-const Counter = {
+const Counter = Respond.createClass({
+  render: function() {
+    return (
+      div({},
+        p({}, text("" + this.props.count)),
+        input({
+          type: "submit",
+          value: "+",
+          onClick: this.props.increment
+        })
+      )
+    );
+  }
+});
+
+const CounterContainer = {
   state: { count: 0 },
 
   increment: function() {
@@ -102,18 +126,16 @@ const Counter = {
     return (
       div({},
         p({}, text("counter!!")),
-        p({}, text("" + this.state.count)),
-        input({
-          type:    "submit",
-          value :  "+",
-          onClick: this.increment
-        })    
+        Counter({
+          increment: this.increment,
+          count:     this.state.count
+        })
       )
     );
   }
 };
 
-App = Respond.createClass(Counter);
+App = Respond.createClass(CounterContainer);
 
-Respond.render(App);
+Respond.render(App());
 

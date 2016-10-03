@@ -119,8 +119,8 @@ const Counter = {
         Title(),
         p({}, text("" + this.state.count)),
         input({
-          type: "submit",
-          value : '+',
+          type:    "submit",
+          value :  "+",
           onClick: this.increment
         })    
       )

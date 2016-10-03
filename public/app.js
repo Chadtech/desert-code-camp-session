@@ -15,7 +15,7 @@ const Respond = {
   },
 
   createClass: function (component) {
-    return function () {
+    return function (props) {
 
       component.isRespondClass = true;
       component.setState = function (change) {
@@ -24,6 +24,8 @@ const Respond = {
 
         Respond.rerender(this);
       };
+
+      component.props = props;
 
       const keys = Object.keys(component);
 
@@ -83,13 +85,17 @@ const div = node("div");
 const input = node("input");
 const p = node("p");
 
-const Title = Respond.createClass({
+const Counter = Respond.createClass({
   render: function () {
-    return p({}, text("counter!!"));
+    return div({}, p({}, text("" + this.props.count)), input({
+      type: "submit",
+      value: "+",
+      onClick: this.props.increment
+    }));
   }
 });
 
-const Counter = {
+const CounterContainer = {
   state: { count: 0 },
 
   increment: function () {
@@ -99,14 +105,13 @@ const Counter = {
   },
 
   render: function () {
-    return div({}, Title(), p({}, text("" + this.state.count)), input({
-      type: "submit",
-      value: '+',
-      onClick: this.increment
+    return div({}, p({}, text("counter!!")), Counter({
+      increment: this.increment,
+      count: this.state.count
     }));
   }
 };
 
-App = Respond.createClass(Counter);
+App = Respond.createClass(CounterContainer);
 
 Respond.render(App());

@@ -90,7 +90,7 @@ const starTrekNameApp = {
         p({}, text(titleMsg)),
         input({placeholder: "enter SSN here"}),
         input({
-          type: "submit",
+          type:    "submit",
           onClick: this.sayStarTrekName
         })    
       )
