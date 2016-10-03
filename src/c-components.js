@@ -19,32 +19,34 @@ const Respond = {
   },
 
   createClass: function(component) {
-    keys = Object.keys(component)
+    return ( function() {
+      keys = Object.keys(component)
 
-    component.setState = function(change) {
-      keys = Object.keys(change);
+      component.setState = function(change) {
+        keys = Object.keys(change);
 
-      this.state = Object.assign(
-        this.state, 
-        change
-      )
+        this.state = Object.assign(
+          this.state, 
+          change
+        )
 
-      Respond.rerender(this);
-    }
+        Respond.rerender(this);
+      }
 
-    return (
-      keys.reduce((c, key) => {
-        var value = component[key];
+      return (
+        keys.reduce((c, key) => {
+          var value = component[key];
 
-        if (typeof value === "function") {
-          value = value.bind(c);
-        }
+          if (typeof value === "function") {
+            value = value.bind(c);
+          }
 
-        c[key] = value;
+          c[key] = value;
 
-        return c;
-      }, {})
-    );
+          return c;
+        }, {})
+      );
+    });
   },
 }
 
@@ -62,7 +64,11 @@ const node = tag => {
 
     // Give the element its children
     element = children.reduce((el, child) => {
-      el.appendChild(child);
+      if (el instanceof HTMLElement) {
+        el.appendChild(child);
+      } else {
+        el.appendChild(child.render());
+      }
       return el;
     }, element);
 
@@ -89,6 +95,14 @@ const div   = node("div");
 const input = node("input");
 const p     = node("p");
 
+const Title = Respond.createClass({
+  render: function() {
+    return (
+      p({}, text("counter!!")),
+    );
+  }
+});
+
 const Counter = {
   state: { count: 0 },
 
@@ -101,7 +115,7 @@ const Counter = {
   render: function() {
     return (
       div({},
-        p({}, text("counter!!")),
+        Title(),
         p({}, text("" + this.state.count)),
         input({
           type: "submit",
@@ -115,5 +129,5 @@ const Counter = {
 
 App = Respond.createClass(Counter);
 
-Respond.render(App);
+Respond.render(App());
 

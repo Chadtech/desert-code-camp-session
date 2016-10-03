@@ -10,14 +10,16 @@ const Respond = {
 
     return (
       keys.reduce((c, key) => {
-        value = c[key];
+        var value = component[key];
 
-        if (typeof c[key] === "function") {
-          c[key] = value.bind(c);
+        if (typeof value === "function") {
+          value = value.bind(c);
         }
 
+        c[key] = value;
+
         return c;
-      }, component)
+      }, {})
     );
   },
 }
