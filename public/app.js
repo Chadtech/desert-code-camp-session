@@ -15,32 +15,27 @@ const Respond = {
   },
 
   createClass: function (component) {
-    return function (props) {
 
-      component.isRespondClass = true;
-      component.setState = function (change) {
+    component.setState = function (change) {
 
-        this.state = Object.assign(this.state, change);
+      this.state = Object.assign(this.state, change);
 
-        Respond.rerender(this);
-      };
-
-      component.props = props;
-
-      const keys = Object.keys(component);
-
-      return keys.reduce((c, key) => {
-        var value = component[key];
-
-        if (typeof value === "function") {
-          value = value.bind(c);
-        }
-
-        c[key] = value;
-
-        return c;
-      }, {});
+      Respond.rerender(this);
     };
+
+    const keys = Object.keys(component);
+
+    return keys.reduce((c, key) => {
+      var value = component[key];
+
+      if (typeof value === "function") {
+        value = value.bind(c);
+      }
+
+      c[key] = value;
+
+      return c;
+    }, {});
   }
 };
 
@@ -57,11 +52,7 @@ const node = tag => {
 
     // Give the element its children
     element = children.reduce((el, child) => {
-      if (child.isRespondClass) {
-        el.appendChild(child.render());
-      } else {
-        el.appendChild(child);
-      }
+      el.appendChild(child);
       return el;
     }, element);
 
@@ -85,17 +76,7 @@ const div = node("div");
 const input = node("input");
 const p = node("p");
 
-const Counter = Respond.createClass({
-  render: function () {
-    return div({}, p({}, text("" + this.props.count)), input({
-      type: "submit",
-      value: "+",
-      onClick: this.props.increment
-    }));
-  }
-});
-
-const CounterContainer = {
+const Counter = {
   state: { count: 0 },
 
   increment: function () {
@@ -105,13 +86,14 @@ const CounterContainer = {
   },
 
   render: function () {
-    return div({}, p({}, text("counter!!")), Counter({
-      increment: this.increment,
-      count: this.state.count
+    return div({}, p({}, text("counter!!")), p({}, text("" + this.state.count)), input({
+      type: "submit",
+      value: "+",
+      onClick: this.increment
     }));
   }
 };
 
-App = Respond.createClass(CounterContainer);
+App = Respond.createClass(Counter);
 
-Respond.render(App());
+Respond.render(App);

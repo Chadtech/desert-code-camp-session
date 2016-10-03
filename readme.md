@@ -28,4 +28,6 @@ A We make a counter application that doesnt work, because the app never re-rende
 
 B We make a functional counter application that does work, because the app re-renders after state changes
 
-C We make Respond Components which can be nested inside each other.
+C We make Respond Components which can be nested inside each other
+
+D We give react classes props

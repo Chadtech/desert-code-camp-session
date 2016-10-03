@@ -1,6 +1,6 @@
 const Respond = {
   render: function(component) {
-    this.app = component
+    this.app = component;
     document.body.appendChild(
       component.render()
     );
@@ -25,7 +25,7 @@ const Respond = {
       this.state = Object.assign(
         this.state, 
         change
-      )
+      );
 
       Respond.rerender(this);
     };

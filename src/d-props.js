@@ -104,8 +104,8 @@ const Counter = Respond.createClass({
       div({},
         p({}, text("" + this.props.count)),
         input({
-          type: "submit",
-          value: "+",
+          type:    "submit",
+          value:   "+",
           onClick: this.props.increment
         })
       )

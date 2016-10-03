@@ -19,7 +19,7 @@ const Respond = {
   },
 
   createClass: function(component) {
-    return ( function() {
+    return (function() {
       
       component.isRespondClass = true;
       component.setState = function(change) {
