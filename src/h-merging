@@ -1,0 +1,40 @@
+
+Merging :=
+
+  Compare the two HTML elements
+              |
+              |
+  Do they have the same tag?
+    |                |
+    no              yes
+    |                |
+    |                v
+    |   Do they have the same attributes
+    |           |             |
+    |           no           yes
+    |           |             |
+    |------------             |
+    |                         |
+    |                         |
+                              |
+  0 Take the children of      |
+    the old vdom, and         |
+    give them to the          |
+    element of the new        |
+    VDOM                      |
+  1 Take the children         |
+    of the HTML element       |
+    and then give them        |
+    a new HTML element        |
+    rendered from the         |
+    VDOM                      |
+                              |
+    |                         |
+    |                         |
+    ---------------------------
+                |
+                |
+                v
+    Apple Merge() to all of the
+    children of both the old and
+    new VDOMs

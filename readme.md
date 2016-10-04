@@ -30,4 +30,14 @@ B We make a functional counter application that does work, because the app re-re
 
 C We make Respond Components which can be nested inside each other
 
-D We give react classes props
+D We give Respond Components props
+
+E We talk through how to render more efficiently through diffing
+
+F We address some of the problems with diffing
+
+G We make a function that diffs two VDOMS
+
+H We talk through how to merge two vdoms, and render the differences
+
+I We make some psuedo code about merging two VDOMs

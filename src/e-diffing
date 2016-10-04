@@ -1,0 +1,62 @@
+
+
+
+    STATE <---------
+      |            |
+      |            |
+    render         |
+      |            |
+      |     user interaction
+      |            | 
+      |            |
+      -----------> UI
+
+
+render := 
+  0 remove all the html
+  1 make new html
+
+PROBLEM. this is very costly in terms of CPU cycles, and wasteful considering most of the time, most of the html isnt changing.
+
+
+SOLUTION. only change what needs to be changed.
+
+render :=
+  0 generate a virtual DOM, and then compare it to the html
+  1 Identify differences between the virtual dom and the html
+  2 Make those changes to the Html
+  3 forget about the Virtual DOM
+
+Html              VDOM
+  div               div
+    p "cool"          p "cool"
+    p "dog"           p "cat"
+    p "man"
+
+changes =
+  0 The VDOMs div no longer has a third child
+  1 The child of the second p is "cat" and not "dog"
+
+render( changes ) =
+  0 Remove the divs third child
+  1 Remove the second p tags text node and replace it with "cat"
+
+
+
+      --------- user interaction ---------
+      |                                  |
+      |                                  |
+      |                                  v
+  --------                            --------
+  | HTML | - - - - differences ------ | VDOM |
+  --------             |              --------
+      ^                |
+      |             render()
+      |                |
+      |                |
+      ------------------
+
+
+
+
+

@@ -1,0 +1,24 @@
+NEW PROBLEM. Its still costly. Referencing and modifying html is inherently costly. Much more costly than referencing and modifying JavaScript objects
+
+SOLUTION. Compare two VDOMs, one VDOM of the existing html and one of the updated HTML.
+
+
+
+      --------- user interaction -----------
+      |                                    |
+      |                                    |
+      |                                    v
+  --------       ------------         ------------
+  | HTML |       | old VDOM |         | new VDOM |
+  --------       ------------         ------------
+      ^            ^  |                   |
+      |            |  |                   |
+      |            |  ---------------------
+      |            |            |
+      |     new becomes old     |
+      |            |            v
+      |            |      ---------------
+      |            -------| differences |
+      |                   ---------------
+      |                         |
+      ----- new becomes html ----
