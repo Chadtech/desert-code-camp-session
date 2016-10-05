@@ -23,12 +23,12 @@ function stringify({tag, attributes}) {
   );
 }
 
+// stringify(oldVDOM) == "div style : color: red;"
+
+// stringify(newVDOM) == "div style : color: blue;"
+
 function diff(newVDOM, oldVDOM) {
   return (
     stringify(newVDOM) === stringify(oldVDOM)
   );
 }
-
-// stringify(oldVDOM) == "div style : color: red;"
-
-// stringify(newVDOM) == "div style : color: blue;"

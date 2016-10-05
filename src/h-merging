@@ -1,7 +1,7 @@
 
 Merging :=
 
-  Compare the two HTML elements
+  Compare the two VDOM elements
               |
               |
   Do they have the same tag?

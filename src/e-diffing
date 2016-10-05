@@ -45,11 +45,15 @@ render( changes ) =
 
       --------- user interaction ---------
       |                                  |
+      |                                  v
+      |                              ---------
+      |                              | State |
+      |                              ---------
       |                                  |
       |                                  v
-  --------                            --------
-  | HTML | - - - - differences ------ | VDOM |
-  --------             |              --------
+  --------                           --------
+  | HTML | - - - - differences ----- | VDOM |
+  --------             |             --------
       ^                |
       |             render()
       |                |

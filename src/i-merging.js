@@ -21,10 +21,10 @@ diff(div, div);
     -> Theyre the same, so no Change necessary
     diff(p.children[0], p.children[0])
       "dog" == "cat"
-      -> Theyre difference, so lets fix it
+      -> Theyre different, so lets fix it
       merge("dog", "cat");
         -> Remove "dog"
-        -> Add "Cat"
+        -> Add "cat"
 
   diff(div.children[2], div.children[2]);
     p == undefined

@@ -64,5 +64,4 @@ const render = component => {
   );
 };
 
-
 render(starTrekNameApp);
