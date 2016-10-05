@@ -8,4 +8,6 @@ function p(text) {
   return output;
 };
 
-document.body.appendChild( p("dank") );
+document.body.appendChild( 
+  p("dank") 
+);
